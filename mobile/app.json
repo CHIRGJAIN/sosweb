@@ -1,0 +1,8 @@
+{
+  "expo": {
+    "name": "SOS Admin",
+    "slug": "sos-admin",
+    "version": "1.0.0",
+    "platforms": ["ios", "android", "web"]
+  }
+}

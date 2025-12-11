@@ -1,0 +1,145 @@
+@import "tailwindcss";
+
+:root {
+  --background: #06080f;
+  --surface: #0b111c;
+  --surface-alt: #0d1525;
+  --foreground: #e6e9f0;
+  --color-primary: #ff8c1a;
+  --color-secondary: #2ea3f2;
+  --color-ink: #f8fafc;
+  --color-muted: #9aa4b5;
+  --color-border: #1f2937;
+  --font-heading: var(--font-roboto, "Roboto");
+  --font-body: var(--font-inter, "Inter");
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-body), system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  min-height: 100vh;
+}
+
+.font-heading {
+  font-family: var(--font-heading), "Roboto", "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+.font-body {
+  font-family: var(--font-body), "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+.bg-ink {
+  background-color: var(--color-ink);
+}
+
+.bg-surface {
+  background-color: var(--surface);
+}
+
+.bg-surface-alt {
+  background-color: var(--surface-alt);
+}
+
+.text-ink {
+  color: var(--color-ink);
+}
+
+.text-muted {
+  color: var(--color-muted);
+}
+
+.border-soft {
+  border-color: var(--color-border);
+}
+
+.bg-primary {
+  background-color: var(--color-primary);
+}
+
+.hover-border-primary:hover {
+  border-color: var(--color-primary);
+}
+
+.hover-text-primary:hover {
+  color: var(--color-primary);
+}
+
+.hover-bg-primary:hover {
+  background-color: #e56800;
+}
+
+.hover\:bg-primary-soft:hover {
+  background-color: rgba(255, 115, 0, 0.1);
+}
+
+.group:hover .group-hover\:bg-primary {
+  background-color: var(--color-primary);
+}
+
+.group:hover .group-hover\:text-white {
+  color: #ffffff;
+}
+
+.bg-primary-soft {
+  background-color: rgba(255, 115, 0, 0.1);
+}
+
+.bg-secondary {
+  background-color: var(--color-secondary);
+}
+
+.text-primary {
+  color: var(--color-primary);
+}
+
+.text-secondary {
+  color: var(--color-secondary);
+}
+
+.border-primary {
+  border-color: var(--color-primary);
+}
+
+main {
+  min-height: calc(100vh - 5rem);
+}
+
+a {
+  color: inherit;
+}
+
+button {
+  font-family: inherit;
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+@keyframes sosPulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(255, 115, 0, 0.45);
+  }
+  70% {
+    box-shadow: 0 0 0 30px rgba(255, 115, 0, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(255, 115, 0, 0);
+  }
+}
+
+.sos-pulse {
+  animation: sosPulse 2.6s ease-in-out infinite;
+}
