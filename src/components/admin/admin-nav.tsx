@@ -43,7 +43,7 @@ export function AdminNav() {
               "rounded-full border px-4 py-2 text-sm font-semibold transition",
               isActive
                 ? "border-primary bg-primary text-white shadow-sm"
-                : "border-[rgba(255,255,255,0.14)] bg-[rgba(255,255,255,0.06)] text-muted hover:border-primary hover:text-primary"
+                : "border-[color:var(--pill-border,rgba(255,255,255,0.14))] bg-[color:var(--pill-bg,rgba(255,255,255,0.06))] text-muted hover:border-primary hover:bg-[color:var(--pill-hover-bg,rgba(255,115,0,0.12))] hover:text-primary"
             )}
           >
             {item.label}

@@ -391,7 +391,7 @@ export default function AdminDashboard() {
                 </div>
               </div>
               <p>{selectedNgo.description}</p>
-              <div className="rounded-xl border border-soft bg-white/5 p-3 text-xs">
+              <div className="rounded-xl border border-soft bg-[color:var(--panel-tint,#fff1e0)] p-3 text-xs text-ink">
                 Raised {formatAmount(selectedNgo.raisedAmount)} of {formatAmount(selectedNgo.goalAmount)} (
                 {percent(selectedNgo.goalAmount ? (selectedNgo.raisedAmount / selectedNgo.goalAmount) * 100 : selectedNgo.progress)}%)
               </div>
@@ -460,7 +460,7 @@ export default function AdminDashboard() {
           <h3 className="font-heading text-xl font-semibold text-ink">Social Detail</h3>
           {selectedSocial ? (
             <div className="mt-4 space-y-3">
-              <div className="h-36 w-full overflow-hidden rounded-xl bg-white/5">
+              <div className="h-36 w-full overflow-hidden rounded-xl bg-[color:var(--panel-tint,#fff1e0)]">
                 {selectedSocial.imageUrl ? (
                   <Image
                     src={selectedSocial.imageUrl}
@@ -477,11 +477,13 @@ export default function AdminDashboard() {
                 <span className="rounded-full bg-primary/10 px-3 py-1 text-primary font-semibold">
                   {selectedSocial.category}
                 </span>
-                <span className="rounded-full bg-white/5 px-3 py-1">{selectedSocial.location}</span>
+                <span className="rounded-full bg-[color:var(--pill-bg,#fff2de)] px-3 py-1 text-ink">
+                  {selectedSocial.location}
+                </span>
                 <span>{formatTimestamp(selectedSocial.timestamp)}</span>
               </div>
               <p className="text-sm text-ink">{selectedSocial.body}</p>
-              <div className="rounded-lg border border-soft bg-white/5 p-3 text-xs text-muted">
+              <div className="rounded-lg border border-soft bg-[color:var(--panel-tint,#fff1e0)] p-3 text-xs text-ink">
                 Raised {formatAmount(selectedSocial.raised)} of {formatAmount(selectedSocial.goal)} (
                 {percent(selectedSocial.progress)}% progress)
               </div>
@@ -521,7 +523,9 @@ export default function AdminDashboard() {
               >
                 <div className="flex items-center justify-between">
                   <p className="font-semibold text-ink">{resource.title}</p>
-                  <span className="rounded-full bg-white/5 px-3 py-1 text-xs text-muted">{resource.category}</span>
+                  <span className="rounded-full bg-[color:var(--pill-bg,#fff2de)] px-3 py-1 text-xs text-ink">
+                    {resource.category}
+                  </span>
                 </div>
                 <p className="mt-2 text-sm text-muted">{resource.description}</p>
                 <p className="mt-2 text-xs text-muted">Region: {resource.region}</p>
@@ -660,7 +664,9 @@ export default function AdminDashboard() {
               >
                 <div className="flex items-center justify-between text-sm">
                   <span className="font-semibold text-ink">{entry.for}</span>
-                  <span className="rounded-full bg-white/5 px-3 py-1 text-xs text-muted">{entry.mode}</span>
+                  <span className="rounded-full bg-[color:var(--pill-bg,#fff2de)] px-3 py-1 text-xs text-ink">
+                    {entry.mode}
+                  </span>
                 </div>
                 <p className="mt-1 text-xs text-muted">
                   {entry.date} | {entry.time}
@@ -671,8 +677,8 @@ export default function AdminDashboard() {
             ))}
           </div>
           {selectedResourceHandling ? (
-            <div className="mt-4 rounded-2xl border border-soft bg-white/5 p-4 text-sm text-muted">
-              <p className="font-semibold text-ink">Detail</p>
+            <div className="mt-4 rounded-2xl border border-soft bg-[color:var(--panel-tint,#fff1e0)] p-4 text-sm text-ink">
+              <p className="font-semibold">Detail</p>
               <p className="mt-1">{selectedResourceHandling.description}</p>
               <p className="mt-1">Mode: {selectedResourceHandling.mode}</p>
               <p className="mt-1">Amount: {selectedResourceHandling.amount}</p>
@@ -712,8 +718,8 @@ export default function AdminDashboard() {
             ))}
           </div>
           {selectedContribution ? (
-            <div className="mt-4 rounded-2xl border border-soft bg-white/5 p-4 text-sm text-muted">
-              <p className="font-semibold text-ink">Detail</p>
+            <div className="mt-4 rounded-2xl border border-soft bg-[color:var(--panel-tint,#fff1e0)] p-4 text-sm text-ink">
+              <p className="font-semibold">Detail</p>
               <p className="mt-1">{selectedContribution.title}</p>
               <p className="mt-1">Mode: {selectedContribution.mode}</p>
               <p className="mt-1">Date: {selectedContribution.date}</p>
@@ -757,7 +763,10 @@ export default function AdminDashboard() {
           </div>
           <div className="mt-4 space-y-3">
             {filteredServices.map((service) => (
-              <div key={service.id} className="rounded-2xl border border-soft bg-white/5 p-4">
+              <div
+                key={service.id}
+                className="rounded-2xl border border-soft bg-[color:var(--panel-tint,#fff1e0)] p-4 text-ink"
+              >
                 <p className="font-semibold text-ink">{service.name}</p>
                 <p className="text-sm text-muted">{service.desc}</p>
                 <p className="mt-1 text-xs text-muted">
@@ -772,7 +781,7 @@ export default function AdminDashboard() {
         <div className="rounded-3xl border border-soft bg-[color:var(--surface-alt,#0c1424)] p-6 shadow-lg shadow-[0_20px_60px_rgba(0,0,0,0.25)]">
           <h2 className="font-heading text-2xl font-semibold text-ink">Profile Snapshot</h2>
           <div className="mt-4 flex items-center gap-3">
-            <div className="h-[72px] w-[72px] overflow-hidden rounded-full bg-white/10">
+            <div className="h-[72px] w-[72px] overflow-hidden rounded-full bg-[color:var(--panel-tint,#fff1e0)]">
               {profile.avatarUrl ? (
                 <Image
                   src={profile.avatarUrl}
@@ -797,11 +806,11 @@ export default function AdminDashboard() {
             <p>Address: {profile.address}</p>
           </div>
           <div className="mt-4 grid gap-3 md:grid-cols-2">
-            <div className="rounded-2xl border border-soft bg-white/5 p-3">
+            <div className="rounded-2xl border border-soft bg-[color:var(--panel-tint,#fff1e0)] p-3 text-ink">
               <p className="text-xs font-semibold text-ink">Distress History</p>
               <div className="mt-2 space-y-2 text-xs text-muted">
                 {profile.distressHistory.map((item) => (
-                  <div key={item.id} className="rounded-lg border border-soft bg-[rgba(255,255,255,0.04)] p-2">
+                  <div key={item.id} className="rounded-lg border border-soft bg-[color:var(--surface)] p-2">
                     <p className="font-semibold text-ink">{item.label}</p>
                     <p>Status: {item.status}</p>
                     <p>Response: {item.responseTime}</p>
@@ -809,11 +818,11 @@ export default function AdminDashboard() {
                 ))}
               </div>
             </div>
-            <div className="rounded-2xl border border-soft bg-white/5 p-3">
+            <div className="rounded-2xl border border-soft bg-[color:var(--panel-tint,#fff1e0)] p-3 text-ink">
               <p className="text-xs font-semibold text-ink">Contribution Summary</p>
               <div className="mt-2 space-y-2 text-xs text-muted">
                 {profile.contributions.map((item) => (
-                  <div key={item.id} className="rounded-lg border border-soft bg-[rgba(255,255,255,0.04)] p-2">
+                  <div key={item.id} className="rounded-lg border border-soft bg-[color:var(--surface)] p-2">
                     <p className="font-semibold text-ink">{item.title}</p>
                     <p>{item.detail}</p>
                   </div>

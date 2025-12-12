@@ -4,7 +4,7 @@ import { Bars3Icon } from "@heroicons/react/24/outline";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
 import { useAuthStore } from "@/stores/auth-store";
 import { useUIStore } from "@/stores/ui-store";
@@ -31,6 +31,7 @@ export function SiteHeader() {
   const { isLoggedIn, hydrate, logout } = useAuthStore();
   const { isMobileNavOpen, openMobileNav, closeMobileNav } = useUIStore();
   const isAdminView = pathname.startsWith("/admin");
+  const [hideOnScroll, setHideOnScroll] = useState(false);
 
   useEffect(() => {
     closeMobileNav();
@@ -39,6 +40,29 @@ export function SiteHeader() {
   useEffect(() => {
     hydrate();
   }, [hydrate]);
+
+  useEffect(() => {
+    if (!isAdminView) {
+      setHideOnScroll(false);
+      return;
+    }
+    let lastY = window.scrollY;
+    let timeoutId: ReturnType<typeof setTimeout> | null = null;
+    const handleScroll = () => {
+      const currentY = window.scrollY;
+      if (Math.abs(currentY - lastY) > 2) {
+        setHideOnScroll(true);
+        if (timeoutId) clearTimeout(timeoutId);
+        timeoutId = setTimeout(() => setHideOnScroll(false), 200);
+      }
+      lastY = currentY;
+    };
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      if (timeoutId) clearTimeout(timeoutId);
+    };
+  }, [isAdminView]);
 
   const navLinks = isLoggedIn ? [...publicLinks, ...privateLinks] : publicLinks;
   const visibleLinks = isAdminView ? [] : navLinks;
@@ -50,7 +74,12 @@ export function SiteHeader() {
 
   return (
     <>
-      <header className="sticky top-0 z-50 border-b border-[color:var(--color-border)] bg-[rgba(6,8,15,0.9)] text-[color:var(--foreground)] shadow-[0_10px_40px_rgba(0,0,0,0.35)] backdrop-blur">
+      <header
+        className={cn(
+          "sticky top-0 z-50 border-b border-[color:var(--color-border)] bg-[rgba(255,255,255,0.94)] text-[color:var(--color-ink)] shadow-[0_10px_30px_rgba(0,0,0,0.08)] backdrop-blur transition-transform duration-200",
+          isAdminView && hideOnScroll ? "-translate-y-full opacity-0 pointer-events-none" : "translate-y-0 opacity-100"
+        )}
+      >
         <div className="mx-auto flex h-20 w-full max-w-[1200px] items-center justify-between px-6">
           {isLoggedIn ? (
             <div className="flex items-center gap-3 cursor-default select-none opacity-90">
@@ -59,7 +88,7 @@ export function SiteHeader() {
                 alt="SANKATMOCHAN logo"
                 width={42}
                 height={42}
-                className="size-10 rounded-full border border-[rgba(11,29,58,0.2)] bg-[rgba(1,117,194,0.08)] object-cover"
+                className="size-10 rounded-full border border-[color:var(--color-border)] bg-[color:var(--pill-bg,#fff2de)] object-cover"
                 priority
               />
               <div className="hidden flex-col leading-tight lg:flex">
@@ -76,7 +105,7 @@ export function SiteHeader() {
                 alt="SANKATMOCHAN logo"
                 width={42}
                 height={42}
-                className="size-10 rounded-full border border-[rgba(11,29,58,0.2)] bg-[rgba(1,117,194,0.08)] object-cover"
+                className="size-10 rounded-full border border-[color:var(--color-border)] bg-[color:var(--pill-bg,#fff2de)] object-cover"
                 priority
               />
               <div className="hidden flex-col leading-tight lg:flex">
@@ -123,7 +152,7 @@ export function SiteHeader() {
               <button
                 type="button"
                 onClick={handleLogout}
-                className="hidden items-center rounded-full border border-[rgba(255,255,255,0.14)] bg-[rgba(255,255,255,0.08)] px-5 py-2 text-sm font-semibold text-white shadow-sm transition hover:border-primary hover:text-primary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[rgba(255,140,26,0.65)] lg:inline-flex"
+                className="hidden items-center rounded-full border border-[color:var(--color-border)] bg-[color:var(--surface)] px-5 py-2 text-sm font-semibold text-ink shadow-sm transition hover:border-primary hover:text-primary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[rgba(255,140,26,0.65)] lg:inline-flex"
               >
                 Logout
               </button>
@@ -133,7 +162,7 @@ export function SiteHeader() {
                 type="button"
                 onClick={openMobileNav}
                 aria-label="Open navigation menu"
-                className="inline-flex size-10 items-center justify-center rounded-full border border-[rgba(255,255,255,0.08)] bg-[rgba(255,255,255,0.06)] text-ink transition hover:border-primary hover:text-primary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 lg:hidden"
+                className="inline-flex size-10 items-center justify-center rounded-full border border-[color:var(--color-border)] bg-[color:var(--surface)] text-ink transition hover:border-primary hover:text-primary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 lg:hidden"
               >
                 <Bars3Icon className="size-6" aria-hidden="true" />
               </button>
@@ -156,7 +185,7 @@ export function SiteHeader() {
       {visibleLinks.length ? (
         <aside
           className={cn(
-            "fixed inset-y-0 right-0 z-50 w-72 transform border-l border-[color:var(--color-border)] bg-[rgba(11,17,28,0.98)] p-6 shadow-xl transition-transform lg:hidden",
+            "fixed inset-y-0 right-0 z-50 w-72 transform border-l border-[color:var(--color-border)] bg-[rgba(255,255,255,0.98)] p-6 shadow-xl transition-transform lg:hidden",
             isMobileNavOpen ? "translate-x-0" : "translate-x-full"
           )}
           aria-label="Mobile navigation"
@@ -169,7 +198,7 @@ export function SiteHeader() {
                   alt="SANKATMOCHAN logo"
                   width={36}
                   height={36}
-                  className="size-9 rounded-full border border-[rgba(255,255,255,0.14)] object-cover"
+                  className="size-9 rounded-full border border-[color:var(--color-border)] bg-[color:var(--pill-bg,#fff2de)] object-cover"
                 />
                 <span className="font-heading text-lg font-semibold text-ink">SANKATMOCHAN</span>
               </div>
@@ -180,7 +209,7 @@ export function SiteHeader() {
                   alt="SANKATMOCHAN logo"
                   width={36}
                   height={36}
-                  className="size-9 rounded-full border border-[rgba(255,255,255,0.14)] object-cover"
+                  className="size-9 rounded-full border border-[color:var(--color-border)] bg-[color:var(--pill-bg,#fff2de)] object-cover"
                 />
                 <span className="font-heading text-lg font-semibold text-ink">SANKATMOCHAN</span>
               </Link>
@@ -217,7 +246,7 @@ export function SiteHeader() {
               <button
                 type="button"
                 onClick={handleLogout}
-                className="mt-auto inline-flex items-center justify-center rounded-full border border-[rgba(255,255,255,0.16)] bg-[rgba(255,255,255,0.08)] px-4 py-2 text-sm font-semibold text-white shadow transition hover:border-primary hover:text-primary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[rgba(255,140,26,0.65)]"
+                className="mt-auto inline-flex items-center justify-center rounded-full border border-[color:var(--color-border)] bg-[color:var(--surface)] px-4 py-2 text-sm font-semibold text-ink shadow transition hover:border-primary hover:text-primary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[rgba(255,140,26,0.65)]"
               >
                 Logout
               </button>

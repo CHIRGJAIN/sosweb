@@ -84,7 +84,7 @@ function ParallaxMedia({ src, alt }: { src: string; alt: string }) {
 
   return (
     <motion.div
-      className="group relative h-[420px] w-full overflow-hidden rounded-3xl border border-white/5 bg-gradient-to-b from-white/5 via-white/2 to-white/5 shadow-[0_25px_80px_rgba(0,0,0,0.35)]"
+      className="group relative h-[420px] w-full overflow-hidden rounded-3xl border border-soft bg-gradient-to-b from-[color:var(--panel-tint,#fff1e0)] via-[color:var(--surface)] to-[color:var(--panel-tint,#fff1e0)] shadow-[0_20px_60px_rgba(0,0,0,0.08)]"
       style={{ rotateX: smoothX, rotateY: smoothY, transformStyle: "preserve-3d" }}
       onMouseMove={(event) => {
         const rect = event.currentTarget.getBoundingClientRect();
@@ -117,10 +117,10 @@ function InteractionButton({
   onClick,
   color,
 }: {
-  icon: typeof HeartIcon;
+  icon: (props: any) => JSX.Element;
   label: string;
-  onClick?: () => void;
-  color?: string;
+  onClick: () => void;
+  color: string;
 }) {
   return (
     <motion.button
@@ -128,11 +128,11 @@ function InteractionButton({
       onClick={onClick}
       whileTap={{ scale: 0.9 }}
       whileHover={{ scale: 1.08 }}
-      className="group inline-flex items-center gap-2 rounded-full bg-white/5 px-4 py-3 text-sm font-semibold text-ink shadow-sm ring-1 ring-white/10 transition"
+      className="group inline-flex items-center gap-2 rounded-full border border-soft bg-[color:var(--surface)] px-4 py-3 text-sm font-semibold text-ink shadow-sm transition"
       style={{ color }}
     >
-      <Icon className="size-5 drop-shadow-[0_0_12px_rgba(255,255,255,0.5)]" />
-      <span className="text-white/80 group-hover:text-white">{label}</span>
+      <Icon className="size-5" />
+      <span className="text-ink group-hover:text-primary">{label}</span>
     </motion.button>
   );
 }
@@ -155,22 +155,22 @@ export default function AdminSocialPostsPage() {
   }, [filtered, selectedId]);
 
   const selected = filtered.find((post) => post.id === selectedId);
-  const pctRaised = selected ? percent(selected.goal ? (selected.raised / selected.goal) * 100 : selected.progress) : 0;
+  const pctRaised = selected ? percent((selected.raised / selected.goal) * 100) : 0;
 
   return (
     <div className="relative space-y-6 pb-16">
-      <div className="absolute inset-0 -z-10 bg-gradient-to-br from-[#0a0f1d] via-[#0f162b] to-[#0a0f1d]" />
-      <header className="relative overflow-hidden rounded-3xl border border-white/10 bg-white/5 px-5 py-5 shadow-[0_25px_80px_rgba(0,0,0,0.35)]">
-        <div className="absolute inset-0 bg-gradient-to-r from-[#ff7300]/15 via-[#ffb347]/10 to-[#4a3aff]/10 blur-3xl" />
+      <div className="absolute inset-0 -z-10 bg-gradient-to-br from-[color:var(--surface)] via-[color:var(--surface-alt)] to-[#fff7ec]" />
+      <header className="relative overflow-hidden rounded-3xl border border-soft bg-[color:var(--surface)] px-5 py-5 shadow-[0_25px_80px_rgba(0,0,0,0.08)]">
+        <div className="absolute inset-0 bg-gradient-to-r from-[rgba(231,136,23,0.12)] via-[rgba(255,179,71,0.08)] to-[rgba(74,58,255,0.08)] blur-3xl" />
         <div className="relative flex flex-wrap items-center justify-between gap-4">
           <div className="flex items-center gap-3">
-            <div className="h-16 w-16 overflow-hidden rounded-2xl border border-white/10 bg-white/5">
+            <div className="h-16 w-16 overflow-hidden rounded-2xl border border-soft bg-[color:var(--panel-tint)]">
               <GlassAvatar />
             </div>
             <div>
               <p className="text-xs font-semibold uppercase tracking-[0.3em] text-primary">Immersive Feed</p>
-              <h2 className="font-heading text-2xl font-bold text-white">Holo Social Grid</h2>
-              <p className="text-sm text-white/70">Cinematic, real-time, glassy UI for field-grade signals.</p>
+              <h2 className="font-heading text-2xl font-bold text-ink">Holo Social Grid</h2>
+              <p className="text-sm text-muted">Cinematic, real-time, glassy UI for field-grade signals.</p>
             </div>
           </div>
           <div className="flex flex-wrap gap-2">
@@ -185,51 +185,51 @@ export default function AdminSocialPostsPage() {
 
       <section className="grid gap-6 lg:grid-cols-[1.05fr,0.95fr]">
         <div className="space-y-4">
-          <div className="rounded-3xl border border-white/10 bg-white/5 p-4 shadow-[0_25px_80px_rgba(0,0,0,0.35)]">
+          <div className="rounded-3xl border border-soft bg-[color:var(--surface)] p-4 shadow-[0_18px_50px_rgba(0,0,0,0.08)]">
             <div className="flex items-center justify-between">
-              <p className="text-sm font-semibold text-white/80">Live Posts</p>
-              <p className="text-xs text-white/50">Parallax + 3D actions</p>
+              <p className="text-sm font-semibold text-ink">Live Posts</p>
+              <p className="text-xs text-muted">Parallax + 3D actions</p>
             </div>
             <div className="mt-3 grid gap-3 md:grid-cols-2">
-              {filtered.map((post) => (
+                {filtered.map((post) => (
                 <button
                   key={post.id}
                   onClick={() => setSelectedId(post.id)}
                   className={cn(
                     "rounded-2xl border px-4 py-3 text-left transition backdrop-blur",
                     selectedId === post.id
-                      ? "border-primary bg-primary/10 shadow-sm"
-                      : "border-white/10 bg-white/5 hover:border-primary/60 hover:bg-white/10"
+                      ? "border-primary bg-primary/10 shadow-sm text-ink"
+                      : "border-soft bg-[color:var(--panel-tint)] text-ink hover:border-primary/60 hover:bg-[color:var(--panel-strong,#ffe6c7)]"
                   )}
                 >
-                  <p className="text-xs text-white/50">{formatTimestamp(post.timestamp)}</p>
-                  <p className="font-semibold text-white">
-                    {post.author} <span className="font-normal text-white/60">{post.handle}</span>
+                  <p className="text-xs text-muted">{formatTimestamp(post.timestamp)}</p>
+                  <p className="font-semibold text-ink">
+                    {post.author} <span className="font-normal text-muted">{post.handle}</span>
                   </p>
-                  <p className="text-xs text-white/60">{post.location}</p>
-                  <p className="mt-2 line-clamp-2 text-sm text-white/80">{post.body}</p>
+                  <p className="text-xs text-muted">{post.location}</p>
+                  <p className="mt-2 line-clamp-2 text-sm text-ink">{post.body}</p>
                 </button>
               ))}
-              {!filtered.length ? <p className="text-sm text-white/60">No posts in this category.</p> : null}
+              {!filtered.length ? <p className="text-sm text-muted">No posts in this category.</p> : null}
             </div>
           </div>
 
           {selected ? (
             <motion.div
               layout
-              className="relative overflow-hidden rounded-[28px] border border-white/10 bg-gradient-to-b from-white/10 via-white/5 to-[#0b1224] p-4 shadow-[0_25px_80px_rgba(0,0,0,0.45)]"
+              className="relative overflow-hidden rounded-[28px] border border-soft bg-gradient-to-b from-[color:var(--surface)] via-[color:var(--surface-alt)] to-[#fff5e7] p-4 shadow-[0_25px_80px_rgba(0,0,0,0.08)]"
             >
-              <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(circle_at_20%_20%,rgba(255,115,0,0.12),transparent_40%),radial-gradient(circle_at_80%_0%,rgba(88,95,255,0.14),transparent_35%)]" />
+              <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(circle_at_20%_20%,rgba(231,136,23,0.16),transparent_40%),radial-gradient(circle_at_80%_0%,rgba(88,95,255,0.12),transparent_35%)]" />
               <div className="relative space-y-4">
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="text-xs text-white/60">{formatTimestamp(selected.timestamp)}</p>
-                    <p className="text-base font-semibold text-white">
-                      {selected.author} <span className="text-white/60">{selected.handle}</span>
+                    <p className="text-xs text-muted">{formatTimestamp(selected.timestamp)}</p>
+                    <p className="text-base font-semibold text-ink">
+                      {selected.author} <span className="text-muted">{selected.handle}</span>
                     </p>
-                    <p className="text-xs text-white/60">{selected.location}</p>
+                    <p className="text-xs text-muted">{selected.location}</p>
                   </div>
-                  <span className="rounded-full bg-primary/15 px-3 py-1 text-xs font-semibold text-primary">
+                  <span className="rounded-full bg-primary/10 px-3 py-1 text-xs font-semibold text-primary">
                     {selected.category}
                   </span>
                 </div>
@@ -254,7 +254,7 @@ export default function AdminSocialPostsPage() {
                   <motion.div
                     initial={{ opacity: 0, scale: 0.8 }}
                     animate={{ opacity: 1, scale: 1 }}
-                    className="flex items-center gap-1 rounded-full bg-white/5 px-3 py-2 text-xs text-white/70 ring-1 ring-white/10"
+                    className="flex items-center gap-1 rounded-full border border-soft bg-[color:var(--surface)] px-3 py-2 text-xs text-muted"
                   >
                     <FaceSmileIcon className="size-4 text-primary" />
                     <span>Reactions ready</span>
@@ -297,12 +297,12 @@ export default function AdminSocialPostsPage() {
                   ) : null}
                 </AnimatePresence>
 
-                <div className="space-y-2 text-sm text-white/80">
-                  <p className="font-semibold text-white">Caption</p>
-                  <p className="text-white/80">{highlightCaption(selected.body)}</p>
-                  <p className="text-xs text-white/60">
+                <div className="space-y-2 text-sm text-ink">
+                  <p className="font-semibold text-ink">Caption</p>
+                  <p className="text-ink">{highlightCaption(selected.body)}</p>
+                  <p className="text-xs text-muted">
                     Raised Rs {selected.raised.toLocaleString("en-IN")} of Rs{" "}
-                    {selected.goal.toLocaleString("en-IN")} • {pctRaised}% tracked
+                    {selected.goal.toLocaleString("en-IN")} | {pctRaised}% tracked
                   </p>
                 </div>
               </div>
@@ -311,23 +311,23 @@ export default function AdminSocialPostsPage() {
         </div>
 
         <div className="space-y-4">
-          <div className="rounded-3xl border border-white/10 bg-white/5 p-5 shadow-[0_25px_80px_rgba(0,0,0,0.35)]">
+          <div className="rounded-3xl border border-soft bg-[color:var(--surface)] p-5 shadow-[0_18px_50px_rgba(0,0,0,0.08)]">
             <div className="flex items-center justify-between">
-              <p className="text-sm font-semibold text-white">Micro-interactions</p>
-              <p className="text-xs text-white/60">120Hz smooth</p>
+              <p className="text-sm font-semibold text-ink">Micro-interactions</p>
+              <p className="text-xs text-muted">120Hz smooth</p>
             </div>
-            <ul className="mt-3 space-y-2 text-sm text-white/70">
-              <li>• 3D parallax tilt on media with lighting overlay</li>
-              <li>• Heart blast, elastic comment tap, radial share halo</li>
-              <li>• Magnetic hover on glass buttons</li>
-              <li>• Glass header with floating 3D avatar</li>
-              <li>• Responsive to mobile, tablet, desktop</li>
+            <ul className="mt-3 space-y-2 text-sm text-muted">
+              <li>- 3D parallax tilt on media with lighting overlay</li>
+              <li>- Heart blast, elastic comment tap, radial share halo</li>
+              <li>- Magnetic hover on glass buttons</li>
+              <li>- Glass header with floating 3D avatar</li>
+              <li>- Responsive to mobile, tablet, desktop</li>
             </ul>
           </div>
 
-          <div className="rounded-3xl border border-white/10 bg-white/5 p-5 shadow-[0_25px_80px_rgba(0,0,0,0.35)]">
+          <div className="rounded-3xl border border-soft bg-[color:var(--surface)] p-5 shadow-[0_18px_50px_rgba(0,0,0,0.08)]">
             <div className="flex items-center justify-between">
-              <p className="text-sm font-semibold text-white">Comment Drawer</p>
+              <p className="text-sm font-semibold text-ink">Comment Drawer</p>
               <button
                 type="button"
                 onClick={() => setCommentOpen((prev) => !prev)}
@@ -349,13 +349,13 @@ export default function AdminSocialPostsPage() {
                     {commentsMock.map((comment) => (
                       <div
                         key={comment.id}
-                        className="rounded-2xl border border-white/10 bg-white/5 px-3 py-2 text-sm text-white/80"
+                        className="rounded-2xl border border-soft bg-[color:var(--panel-tint)] px-3 py-2 text-sm text-ink"
                       >
                         <p className="text-xs font-semibold text-primary">{comment.author}</p>
-                        <p>{comment.text}</p>
+                        <p className="text-muted">{comment.text}</p>
                       </div>
                     ))}
-                    <div className="rounded-2xl border border-dashed border-white/20 bg-white/5 px-3 py-3 text-xs text-white/60">
+                    <div className="rounded-2xl border border-dashed border-soft bg-[color:var(--panel-tint)] px-3 py-3 text-xs text-muted">
                       Add frictionless comments with spring physics and emoji selector.
                     </div>
                   </div>

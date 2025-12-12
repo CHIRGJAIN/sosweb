@@ -17,7 +17,7 @@ export function SiteFooter() {
       <div className="mx-auto flex w-full max-w-6xl flex-col gap-12 px-6 py-12 lg:flex-row lg:items-start lg:justify-between">
         <div className="space-y-4">
           <div className="inline-flex items-center gap-3">
-            <div className="flex size-11 items-center justify-center rounded-full border border-[rgba(255,255,255,0.14)] bg-[rgba(255,255,255,0.06)] text-sm font-semibold text-primary">
+            <div className="flex size-11 items-center justify-center rounded-full border border-[color:var(--color-border)] bg-[color:var(--pill-bg,#fff2de)] text-sm font-semibold text-primary">
               SOS
             </div>
             <div className="leading-tight">

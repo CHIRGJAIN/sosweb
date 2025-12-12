@@ -1,17 +1,63 @@
 @import "tailwindcss";
 
 :root {
-  --background: #06080f;
-  --surface: #0b111c;
-  --surface-alt: #0d1525;
-  --foreground: #e6e9f0;
-  --color-primary: #ff8c1a;
-  --color-secondary: #2ea3f2;
-  --color-ink: #f8fafc;
-  --color-muted: #9aa4b5;
-  --color-border: #1f2937;
+  --background: #ffffff;
+  --surface: #fff8f0;
+  --surface-alt: #fff2de;
+  --foreground: #0f172a;
+  --color-primary: #e78817;
+  --color-secondary: #c05621;
+  --color-ink: #0f172a;
+  --color-muted: #4b5563;
+  --color-border: #f1dec6;
+  --chip-border: rgba(0, 0, 0, 0.08);
+  --chip-bg: rgba(231, 136, 23, 0.08);
+  --chip-hover-bg: rgba(231, 136, 23, 0.16);
+  --pill-border: rgba(0, 0, 0, 0.12);
+  --pill-bg: rgba(231, 136, 23, 0.08);
+  --pill-hover-bg: rgba(231, 136, 23, 0.16);
+  --panel-tint: rgba(231, 136, 23, 0.1);
+  --panel-strong: rgba(231, 136, 23, 0.16);
   --font-heading: var(--font-roboto, "Roboto");
   --font-body: var(--font-inter, "Inter");
+}
+
+.admin-theme {
+  --background: #ffffff;
+  --surface: #fff8f0;
+  --surface-alt: #fff2de;
+  --foreground: #1f2937;
+  --color-primary: #e78817;
+  --color-secondary: #c05621;
+  --color-ink: #0f172a;
+  --color-muted: #6b7280;
+  --color-border: #f1dec6;
+  --chip-border: rgba(0, 0, 0, 0.08);
+  --chip-bg: rgba(231, 136, 23, 0.08);
+  --chip-hover-bg: rgba(231, 136, 23, 0.16);
+  --pill-border: rgba(0, 0, 0, 0.12);
+  --pill-bg: rgba(231, 136, 23, 0.08);
+  --pill-hover-bg: rgba(231, 136, 23, 0.16);
+  --panel-tint: rgba(231, 136, 23, 0.1);
+  --panel-strong: rgba(231, 136, 23, 0.16);
+  background: var(--background);
+  color: var(--foreground);
+}
+
+.admin-theme .bg-white\/5 {
+  background-color: var(--panel-tint);
+}
+
+.admin-theme .bg-white\/10 {
+  background-color: var(--panel-strong);
+}
+
+.admin-theme .border-white\/10 {
+  border-color: var(--color-border);
+}
+
+.admin-theme .border-white\/20 {
+  border-color: var(--color-border);
 }
 
 *,
