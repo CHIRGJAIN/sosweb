@@ -4,11 +4,11 @@ import { Bars3Icon } from "@heroicons/react/24/outline";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { cn } from "@/lib/utils";
-import { useAuthStore } from "@/stores/auth-store";
 import { useUIStore } from "@/stores/ui-store";
 import { ProfilePanel } from "./profile-panel";
+import { useSessionStore } from "@/lib/mock/session";
 
 type NavLink = {
   href: string;
@@ -23,15 +23,12 @@ const publicLinks: NavLink[] = [
   { href: "/anonymous", label: "Anonymous Help" },
 ];
 
-const privateLinks: NavLink[] = [{ href: "/admin", label: "Admin" }];
-
 export function SiteHeader() {
   const pathname = usePathname();
   const router = useRouter();
-  const { isLoggedIn, hydrate, logout } = useAuthStore();
+  const { session, hydrate, logout } = useSessionStore();
   const { isMobileNavOpen, openMobileNav, closeMobileNav } = useUIStore();
-  const isAdminView = pathname.startsWith("/admin");
-  const [hideOnScroll, setHideOnScroll] = useState(false);
+  const isLoggedIn = Boolean(session);
 
   useEffect(() => {
     closeMobileNav();
@@ -41,31 +38,8 @@ export function SiteHeader() {
     hydrate();
   }, [hydrate]);
 
-  useEffect(() => {
-    if (!isAdminView) {
-      setHideOnScroll(false);
-      return;
-    }
-    let lastY = window.scrollY;
-    let timeoutId: ReturnType<typeof setTimeout> | null = null;
-    const handleScroll = () => {
-      const currentY = window.scrollY;
-      if (Math.abs(currentY - lastY) > 2) {
-        setHideOnScroll(true);
-        if (timeoutId) clearTimeout(timeoutId);
-        timeoutId = setTimeout(() => setHideOnScroll(false), 200);
-      }
-      lastY = currentY;
-    };
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-      if (timeoutId) clearTimeout(timeoutId);
-    };
-  }, [isAdminView]);
-
-  const navLinks = isLoggedIn ? [...publicLinks, ...privateLinks] : publicLinks;
-  const visibleLinks = isAdminView ? [] : navLinks;
+  const navLinks = publicLinks;
+  const visibleLinks = navLinks;
 
   const handleLogout = () => {
     logout();
@@ -75,10 +49,7 @@ export function SiteHeader() {
   return (
     <>
       <header
-        className={cn(
-          "sticky top-0 z-50 border-b border-[color:var(--color-border)] bg-[rgba(255,255,255,0.94)] text-[color:var(--color-ink)] shadow-[0_10px_30px_rgba(0,0,0,0.08)] backdrop-blur transition-transform duration-200",
-          isAdminView && hideOnScroll ? "-translate-y-full opacity-0 pointer-events-none" : "translate-y-0 opacity-100"
-        )}
+        className="sticky top-0 z-50 border-b border-[color:var(--color-border)] bg-[rgba(255,255,255,0.94)] text-[color:var(--color-ink)] shadow-[0_10px_30px_rgba(0,0,0,0.08)] backdrop-blur transition-transform duration-200"
       >
         <div className="mx-auto flex h-20 w-full max-w-[1200px] items-center justify-between px-6">
           {isLoggedIn ? (

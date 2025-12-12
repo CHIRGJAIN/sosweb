@@ -7,7 +7,7 @@ export default function OpsRedirect() {
   const router = useRouter();
 
   useEffect(() => {
-    router.replace("/admin");
+    router.replace("/ops/overview");
   }, [router]);
 
   return null;
