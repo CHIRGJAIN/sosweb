@@ -4,7 +4,7 @@ import { Canvas } from "@react-three/fiber";
 import { Float } from "@react-three/drei";
 import { AnimatePresence, motion, useMotionValue, useSpring, useTransform } from "framer-motion";
 import Image from "next/image";
-import { useEffect, useMemo, useState } from "react";
+import { ComponentProps, ComponentType, useEffect, useMemo, useState } from "react";
 import {
   BookmarkIcon,
   ChatBubbleOvalLeftIcon,
@@ -111,13 +111,15 @@ function ParallaxMedia({ src, alt }: { src: string; alt: string }) {
   );
 }
 
+type IconType = ComponentType<ComponentProps<"svg">>;
+
 function InteractionButton({
   icon: Icon,
   label,
   onClick,
   color,
 }: {
-  icon: (props: any) => JSX.Element;
+  icon: IconType;
   label: string;
   onClick: () => void;
   color: string;
@@ -243,14 +245,14 @@ export default function AdminSocialPostsPage() {
                     color={liked ? "#ff4d6d" : "#ffb347"}
                     onClick={() => setLiked((prev) => !prev)}
                   />
-                  <InteractionButton icon={ChatBubbleOvalLeftIcon} label="Comment" color="#4ade80" />
+                  <InteractionButton icon={ChatBubbleOvalLeftIcon} label="Comment" color="#4ade80" onClick={() => setCommentOpen((prev) => !prev)} />
                   <InteractionButton
                     icon={PaperAirplaneIcon}
                     label="Share"
                     color="#60a5fa"
                     onClick={() => setShareOpen((prev) => !prev)}
                   />
-                  <InteractionButton icon={BookmarkIcon} label="Save" color="#facc15" />
+                  <InteractionButton icon={BookmarkIcon} label="Save" color="#facc15" onClick={() => {}} />
                   <motion.div
                     initial={{ opacity: 0, scale: 0.8 }}
                     animate={{ opacity: 1, scale: 1 }}
