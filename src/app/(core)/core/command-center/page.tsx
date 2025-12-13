@@ -4,7 +4,7 @@ import { useMemo } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { ArrowUpRight, Clock4, MapPin, ShieldCheck, Sparkles } from "lucide-react";
 import { mockApi } from "@/lib/mock/api";
-import { StatsCards } from "@/components/common/StatsCards";
+import { StatsCards, type Stat } from "@/components/common/StatsCards";
 import { DataTable } from "@/components/common/DataTable";
 import { CaseRecord, VerificationItem } from "@/types";
 import { useRouter } from "next/navigation";
@@ -21,7 +21,7 @@ export default function CommandCenterPage() {
   const slaBreaches = useMemo(() => cases.filter((c) => c.slaHours < 24 && c.status !== "RESOLVED"), [cases]);
   const reservoirBalance = 500000; // mock
 
-  const stats = [
+  const stats: Stat[] = [
     { label: "Active cases", value: cases.length, helper: `${criticalCases.length} critical` },
     { label: "Pending verifications", value: pendingVerifications.length, helper: "User + authority", tone: "warning" },
     { label: "SLA warnings", value: slaBreaches.length, helper: "Under 24h", tone: "warning" },
