@@ -2,7 +2,7 @@ export type Stat = {
   label: string;
   value: string | number;
   helper?: string;
-  tone?: "default" | "warning" | "success";
+  tone?: string;
 };
 
 export function StatsCards({ stats }: { stats: Stat[] }) {
