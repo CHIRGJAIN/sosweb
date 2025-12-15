@@ -65,9 +65,11 @@ export default function CommandCenterPage() {
           </div>
           <div className="mt-3 grid gap-2 text-sm text-slate-700 dark:text-slate-200">
             {cases.slice(0, 5).map((c) => (
-              <div
+              <button
                 key={c.id}
-                className="flex items-center justify-between rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 dark:border-slate-800 dark:bg-slate-800/60"
+                onClick={() => router.push(`/core/cases/${c.id}`)}
+                className="w-full flex items-center justify-between rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 text-left hover:border-amber-300 hover:bg-amber-50/70 dark:border-slate-800 dark:bg-slate-800/60"
+                aria-label={`Open case ${c.id}`}
               >
                 <div>
                   <p className="font-semibold">{c.title}</p>
@@ -76,7 +78,7 @@ export default function CommandCenterPage() {
                 <span className="rounded-full bg-amber-100 px-3 py-1 text-xs font-semibold text-amber-800 dark:bg-amber-500/20 dark:text-amber-100">
                   {c.status}
                 </span>
-              </div>
+              </button>
             ))}
           </div>
         </div>
@@ -121,9 +123,10 @@ export default function CommandCenterPage() {
             </div>
             <div className="mt-2 space-y-2">
               {publishing.map((item) => (
-                <div
+                <button
                   key={item.id}
-                  className="flex items-center justify-between rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 text-sm text-slate-700 dark:border-slate-800 dark:bg-slate-800/60 dark:text-slate-200"
+                  onClick={() => (item.caseId ? router.push(`/core/cases/${item.caseId}`) : undefined)}
+                  className="w-full flex items-center justify-between rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 text-sm text-slate-700 hover:border-amber-300 hover:bg-amber-50/70 dark:border-slate-800 dark:bg-slate-800/60 dark:text-slate-200"
                 >
                   <div>
                     <p className="font-semibold">{item.title}</p>
@@ -132,7 +135,7 @@ export default function CommandCenterPage() {
                   <span className="rounded-full bg-emerald-100 px-3 py-1 text-xs font-semibold text-emerald-800 dark:bg-emerald-500/20 dark:text-emerald-100">
                     {item.status}
                   </span>
-                </div>
+                </button>
               ))}
             </div>
           </div>

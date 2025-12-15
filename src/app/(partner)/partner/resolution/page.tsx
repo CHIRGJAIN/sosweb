@@ -59,8 +59,8 @@ export default function ResolutionPage() {
             className="w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-900 shadow-sm focus:border-amber-500 focus:outline-none dark:border-slate-700 dark:bg-slate-900 dark:text-white"
             rows={4}
           />
-          <Button onClick={() => mutation.mutate()} disabled={mutation.isLoading}>
-            {mutation.isLoading ? "Submitting..." : "Submit"}
+          <Button onClick={() => mutation.mutate()} disabled={Boolean((mutation as any).isLoading)}>
+            {(mutation as any).isLoading ? "Submitting..." : "Submit"}
           </Button>
         </div>
         <div className="space-y-2">

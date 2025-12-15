@@ -33,14 +33,11 @@ type SidebarProps = {
 const coreNav: NavItem[] = [
   { label: "Command Center", href: "/core/command-center", icon: LayoutDashboard },
   { label: "Cases", href: "/core/cases", icon: ClipboardList },
-  { label: "Verification", href: "/core/verification", icon: ShieldCheck },
-  { label: "Ledger", href: "/core/finance/ledger", icon: BarChart3 },
-  { label: "Disbursements", href: "/core/finance/disbursements", icon: CheckSquare },
-  { label: "Reservoir", href: "/core/finance/reservoir", icon: Shield },
-  { label: "Businesses", href: "/core/businesses", icon: Building2 },
-  { label: "Campaigns", href: "/core/campaigns", icon: Briefcase },
-  { label: "Vault", href: "/core/vault", icon: FolderLock },
-  { label: "Publishing", href: "/core/publishing", icon: MailOpen },
+  { label: "Routing Rules", href: "/core/routing-rules", icon: ListChecks },
+  { label: "Directory: NGOs", href: "/core/directory/ngos", icon: Users },
+  { label: "Directory: Services", href: "/core/directory/services", icon: ShieldCheck },
+  { label: "Directory: Resources", href: "/core/directory/resources", icon: Building2 },
+  { label: "Moderation: Posts", href: "/core/moderation/posts", icon: FileWarning },
   { label: "Users", href: "/core/users", icon: Users },
   { label: "Roles", href: "/core/roles", icon: ShieldOff },
   { label: "Audit Log", href: "/core/audit", icon: ScrollText },
@@ -49,22 +46,25 @@ const coreNav: NavItem[] = [
 const opsNav: NavItem[] = [
   { label: "Overview", href: "/ops/overview", icon: LayoutDashboard },
   { label: "Cases", href: "/ops/cases", icon: ClipboardList },
-  { label: "Finance", href: "/ops/finance", icon: BarChart3 },
-  { label: "Publishing", href: "/ops/publishing", icon: MailOpen },
-  { label: "Escalations", href: "/ops/escalations", icon: FileWarning },
+  { label: "Service Requests", href: "/ops/service-requests", icon: MailOpen },
+  { label: "Reports", href: "/ops/reports", icon: BarChart3 },
 ];
 
 const partnerNav: NavItem[] = [
   { label: "Assigned Cases", href: "/partner/cases", icon: ListChecks },
-  { label: "Case Detail", href: "/partner/resolution", icon: FileCheck2 },
   { label: "NGO Reports", href: "/partner/ngo/reports", icon: Activity },
-  { label: "Business Campaigns", href: "/partner/business/campaigns", icon: BadgeCheck },
+];
+
+const responderNav: NavItem[] = [
+  { label: "Assignments", href: "/responder/assignments", icon: ListChecks },
+  { label: "History", href: "/responder/history", icon: Activity },
 ];
 
 function navForRole(role: Role) {
   if (role === "CORE_ADMIN") return coreNav;
   if (role === "SUB_ADMIN") return opsNav;
-  if (role === "AUTHORITY" || role === "NGO" || role === "BUSINESS") return partnerNav;
+  if (role === "AUTHORITY") return responderNav;
+  if (role === "NGO" || role === "BUSINESS") return partnerNav;
   return [];
 }
 

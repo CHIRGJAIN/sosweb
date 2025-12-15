@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
@@ -8,6 +8,7 @@ import { mockApi } from "@/lib/mock/api";
 import { CaseRecord } from "@/types";
 import { DataTable } from "@/components/common/DataTable";
 import { FilterBar } from "@/components/common/FilterBar";
+import CaseCardList from "@/components/cases/CaseCardList";
 
 const statuses: CaseRecord["status"][] = ["OPEN", "ASSIGNED", "PENDING_EVIDENCE", "VERIFICATION", "RESOLVED", "CLOSED", "ESCALATED"];
 const severities: CaseRecord["severity"][] = ["LOW", "MEDIUM", "HIGH", "CRITICAL"];
@@ -77,11 +78,21 @@ export default function CoreCasesPage() {
           ))}
         </select>
       </FilterBar>
-      <DataTable<CaseRecord>
-        data={filtered}
-        columns={columns}
-        onRowClick={(row) => router.push(`/core/cases/${row.id}`)}
-      />
+
+      <div className="hidden lg:block">
+        <DataTable<CaseRecord>
+          data={filtered}
+          columns={columns}
+          pageSize={10}
+          onRowClick={(row) => router.push(`/core/cases/${(row as any).id}`)}
+        />
+      </div>
+
+      <div className="block lg:hidden">
+        <CaseCardList
+          items={filtered.map((c) => ({ id: c.id, title: c.title, category: c.type ?? "", severity: c.severity, description: c.summary }))}
+        />
+      </div>
     </div>
   );
 }

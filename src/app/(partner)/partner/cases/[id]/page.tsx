@@ -97,10 +97,10 @@ export default function PartnerCaseDetailPage() {
             />
             <Button
               onClick={() => uploadMutation.mutate(caption || "New authority evidence")}
-              disabled={uploadMutation.isLoading}
+              disabled={Boolean((uploadMutation as any).isLoading)}
               className="mt-2 rounded-lg px-3 py-2 text-xs font-semibold"
             >
-              {uploadMutation.isLoading ? "Uploading..." : "Upload"}
+              {(uploadMutation as any).isLoading ? "Uploading..." : "Upload"}
             </Button>
           </div>
           <div className="space-y-2 rounded-2xl border border-slate-200 bg-white p-4 shadow-sm dark:border-slate-800 dark:bg-slate-900">
@@ -112,7 +112,7 @@ export default function PartnerCaseDetailPage() {
               rows={4}
             />
             <div className="flex gap-2">
-              <Button onClick={() => resolutionMutation.mutate()} disabled={resolutionMutation.isLoading}>
+              <Button onClick={() => resolutionMutation.mutate()} disabled={Boolean((resolutionMutation as any).isLoading)}>
                 Submit
               </Button>
               <Button variant="ghost" onClick={() => statusMutation.mutate()} className="rounded-lg border border-slate-200 bg-white px-3 py-2 text-xs font-semibold text-slate-700 shadow-sm hover:border-amber-400 hover:text-amber-600 dark:border-slate-800 dark:bg-slate-900 dark:text-white">

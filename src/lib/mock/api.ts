@@ -1,3 +1,13 @@
+import { v4 as uuidv4 } from "uuid";
+import type {
+  Case,
+  Evidence,
+  RoutingRule,
+  DirectoryItem,
+  ModerationItem,
+  UserProfile,
+  AssignedTo,
+} from "@/types/sos";
 import {
   AuditLog,
   Business,
@@ -42,6 +52,20 @@ let verificationQueueState = [...mockVerificationQueue];
 const ledgerState = [...mockLedgerEntries];
 let disbursementState = [...mockDisbursements];
 let reservoirRulesState = [...mockReservoirRules];
+let routingRulesState: RoutingRule[] = [
+  { id: "RT-01", category: "MEDICAL", department: "Health Authority", defaultResponderGroup: "Health Responders" },
+  { id: "RT-02", category: "FIRE", department: "Fire Department", defaultResponderGroup: "Fire Units" },
+  { id: "RT-03", category: "OTHER", department: "Ops Desk", defaultResponderGroup: "Ops" },
+];
+let directoryState: DirectoryItem[] = [
+  { id: "DIR-01", name: "Relief Volunteers", type: "NGO", contact: "volunteers@relief.local", description: "Volunteer coordination and on-ground support" },
+  { id: "DIR-02", name: "Health Shield", type: "NGO", contact: "contact@healthshield.org", description: "Medical relief and supplies" },
+  { id: "DIR-03", name: "City Water Services", type: "SERVICE", contact: "water@city.local", description: "Water distribution and management" },
+];
+let moderationState: ModerationItem[] = [
+  { id: "MOD-01", postId: "POST-101", reporterId: "USR-04", reason: "Inaccurate medical advice", status: "PENDING" },
+  { id: "MOD-02", postId: "POST-102", reporterId: "USR-05", reason: "Hate speech", status: "PENDING" },
+];
 let publishingState = [...mockPublishingQueue];
 let businessesState = [...mockBusinesses];
 let campaignsState = [...mockCampaigns];
@@ -272,6 +296,21 @@ export async function fetchReservoirRules() {
   return reservoirRulesState;
 }
 
+export async function listRoutingRules() {
+  await delay();
+  return routingRulesState;
+}
+
+export async function listDirectory(type?: DirectoryItem["type"]) {
+  await delay();
+  return directoryState.filter((d) => (type ? d.type === type : true));
+}
+
+export async function listModerationQueue(status?: ModerationItem["status"]) {
+  await delay();
+  return moderationState.filter((m) => (status ? m.status === status : true));
+}
+
 export async function updateReservoirRule(params: { id: string; value: string; actor: string; role: Role }) {
   await delay();
   reservoirRulesState = reservoirRulesState.map((rule) =>
@@ -311,7 +350,7 @@ export async function updatePublishingStatus(params: {
     action: "update_publishing",
     entity: "PublishingItem",
     entityId: params.id,
-    meta: { status: params.status, reason: params.reason },
+    meta: { status: params.status, ...(params.reason && { reason: params.reason }) },
   });
   return publishingState.find((item) => item.id === params.id)!;
 }
@@ -531,6 +570,9 @@ export const mockApi = {
   fetchDisbursements,
   decideDisbursement,
   fetchReservoirRules,
+  listRoutingRules,
+  listDirectory,
+  listModerationQueue,
   updateReservoirRule,
   fetchPublishingQueue,
   updatePublishingStatus,

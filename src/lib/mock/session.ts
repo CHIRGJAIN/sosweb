@@ -43,7 +43,7 @@ const ACCOUNTS: Array<SessionRecord & { password: string }> = [
     geoScope: { region: "Delhi" },
     partnerType: "AUTHORITY",
     department: "Authority",
-    defaultRoute: "/partner/cases",
+    defaultRoute: "/responder/assignments",
   },
   {
     name: "NGO Field",
